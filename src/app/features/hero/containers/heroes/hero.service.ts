@@ -1,15 +1,15 @@
 import { Injectable } from "@angular/core";
 import { Apollo } from "apollo-angular";
 import { Hero } from "./hero.model";
-import { GET_HEROES_QUERY } from "../../../../graphql/queries/hero.queries";
-import { untilDestroyed } from "@ngneat/until-destroy";
-import { catchError, finalize, tap } from "rxjs/operators";
-import { of } from "rxjs";
+import {
+  GET_HEROES_QUERY,
+  GET_HEROES_QUERY_CLIENT,
+} from "src/app/graphql/queries/hero.queries";
 import {
   ADD_HERO,
   DELETE_A_HERO,
   UPDATE_HERO,
-} from "../../../../graphql/mutations/hero.mutations";
+} from "src/app/graphql/mutations/hero.mutations";
 
 @Injectable({
   providedIn: "root",
@@ -20,6 +20,12 @@ export class HeroService {
   getHeroesQuery() {
     return this.apollo.watchQuery<{ heroes: Hero[] }>({
       query: GET_HEROES_QUERY,
+    }).valueChanges;
+  }
+
+  getHeroesQueryClient() {
+    return this.apollo.watchQuery<{ heroes: Hero[] }>({
+      query: GET_HEROES_QUERY_CLIENT,
     }).valueChanges;
   }
 

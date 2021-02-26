@@ -11,3 +11,15 @@ export const GET_HEROES_QUERY = gql`
     }
   }
 `;
+
+export const GET_HEROES_QUERY_CLIENT = gql`
+  query get_heroes {
+    heroes @client {
+      id
+      firstName
+      lastName
+      house
+      knownAs
+    }
+  }
+`;

@@ -1,13 +1,12 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
-import { Apollo, gql } from "apollo-angular";
+import { Apollo } from "apollo-angular";
 import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
-import { GET_HEROES_QUERY } from "../../../../graphql/queries/hero.queries";
-import { catchError, finalize, tap } from "rxjs/operators";
+import { catchError, finalize, map, tap } from "rxjs/operators";
 import { of } from "rxjs";
-import { DELETE_A_HERO } from "../../../../graphql/mutations/hero.mutations";
 import { HeroService } from "./hero.service";
+import { Hero } from "./hero.model";
 
 @UntilDestroy()
 @Component({
@@ -16,7 +15,7 @@ import { HeroService } from "./hero.service";
   styleUrls: ["./heroes.component.css"],
 })
 export class HeroesComponent implements OnInit {
-  heroes: any[];
+  heroes: Hero[];
   itemForm: FormGroup;
   editedForm: FormGroup;
   isLoading = false;
@@ -42,7 +41,7 @@ export class HeroesComponent implements OnInit {
       .deleteHeroMutate(id)
       .pipe(
         untilDestroyed(this),
-        tap(() => (this.heroes = this.heroes.filter((h) => h.id != id))),
+        map(() => (this.heroes = this.heroes.filter((h) => h.id != id))),
         catchError((error) => of([])),
         finalize(() => (this.isLoading = false))
       )
@@ -55,7 +54,7 @@ export class HeroesComponent implements OnInit {
       .addHeroMutate(this.itemForm.value)
       .pipe(
         untilDestroyed(this),
-        tap((result: any) => {
+        map((result: any) => {
           this.heroes = [
             ...this.heroes,
             result.data.insert_heroes.returning[0],
@@ -76,7 +75,7 @@ export class HeroesComponent implements OnInit {
       .updateHeroMutate(editedHero)
       .pipe(
         untilDestroyed(this),
-        tap(
+        map(
           () =>
             (this.heroes = this.heroes.map((h) =>
               h.id === editedHero.id ? editedHero : h
@@ -99,7 +98,7 @@ export class HeroesComponent implements OnInit {
       .getHeroesQuery()
       .pipe(
         untilDestroyed(this),
-        tap((result) => {
+        map((result) => {
           this.heroes = result?.data?.heroes;
           this.isLoading = result.loading;
           this.error = result.error;
