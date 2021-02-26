@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrlBase: "http://localhost:5000/"
+  graphqlEndpoint: "https://heroes.hasura.app/v1/graphql",
+  hasuraKey: "OwhUNq10xBZhBCYVF6lxiCkkaNz7hbMvATMs9zN7dsdv8jvVKpFMbPiALGao6MG3", // This should be kept in a server, not here
 };
 
 /*

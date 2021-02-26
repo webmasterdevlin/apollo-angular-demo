@@ -1,1 +1,1 @@
-# NgRx Course
+# Apollo Angular Course

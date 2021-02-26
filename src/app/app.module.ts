@@ -7,8 +7,8 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NavBarComponent } from "./shared/components/nav-bar/nav-bar.component";
 import { SharedModule } from "./shared/shared.module";
 import { CoreModule } from "./core/core.module";
-import { GraphQLModule } from './graphql.module';
-import { HttpClientModule } from '@angular/common/http';
+import { GraphQLModule } from "./graphql/graphql.module";
+import { HttpClientModule } from "@angular/common/http";
 
 @NgModule({
   declarations: [AppComponent, NavBarComponent],

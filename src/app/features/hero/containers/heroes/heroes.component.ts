@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
+import { Apollo, gql } from "apollo-angular";
+import { GET_HEROES_QUERY } from "../../../../graphql/queries/hero.queries";
 
 @Component({
   selector: "app-heroes",
@@ -11,14 +13,29 @@ export class HeroesComponent implements OnInit {
   heroes: any[];
   itemForm: FormGroup;
   editedForm: FormGroup;
-  error = "";
   isLoading = false;
   editingTracker = "0";
+  rates: any[];
+  loading = true;
+  error: any;
 
-  constructor(private fb: FormBuilder, private router: Router) {}
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private apollo: Apollo
+  ) {}
 
   ngOnInit(): void {
     this.formBuilderInit();
+    this.apollo
+      .watchQuery({
+        query: GET_HEROES_QUERY,
+      })
+      .valueChanges.subscribe((result: any) => {
+        this.heroes = result?.data?.heroes;
+        this.loading = result.loading;
+        this.error = result.error;
+      });
   }
 
   handleNavigateHeroDetail(id: string) {
