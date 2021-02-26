@@ -9,6 +9,7 @@ import { HttpLink } from "apollo-angular/http";
 import { setContext } from "@apollo/client/link/context";
 import { HttpHeaders } from "@angular/common/http";
 import { environment } from "src/environments/environment";
+import { HeroService } from "../features/hero/containers/heroes/hero.service";
 
 const uri = environment.graphqlEndpoint;
 
@@ -36,6 +37,7 @@ export function createApollo(httpLink: HttpLink): ApolloClientOptions<any> {
       useFactory: createApollo,
       deps: [HttpLink],
     },
+    HeroService,
   ],
 })
 export class GraphQLModule {}

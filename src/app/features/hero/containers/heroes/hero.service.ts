@@ -11,9 +11,7 @@ import {
   UPDATE_HERO,
 } from "src/app/graphql/mutations/hero.mutations";
 
-@Injectable({
-  providedIn: "root",
-})
+@Injectable()
 export class HeroService {
   constructor(private apollo: Apollo) {}
 
