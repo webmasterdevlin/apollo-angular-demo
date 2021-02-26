@@ -69,7 +69,24 @@ export class HeroesComponent implements OnInit {
       .subscribe();
   }
 
-  handleUpdateHero() {}
+  handleUpdateHero() {
+    const editedHero = this.editedForm.value;
+    this.isLoading = true;
+    this.heroService
+      .updateHeroMutate(editedHero)
+      .pipe(
+        untilDestroyed(this),
+        tap(
+          () =>
+            (this.heroes = this.heroes.map((h) =>
+              h.id === editedHero.id ? editedHero : h
+            ))
+        ),
+        catchError((error) => of([])),
+        finalize(() => (this.isLoading = false))
+      )
+      .subscribe();
+  }
 
   handleSoftDeleteHero(id: string) {}
 

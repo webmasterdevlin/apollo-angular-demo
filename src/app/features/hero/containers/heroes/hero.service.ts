@@ -8,6 +8,7 @@ import { of } from "rxjs";
 import {
   ADD_HERO,
   DELETE_A_HERO,
+  UPDATE_HERO,
 } from "../../../../graphql/mutations/hero.mutations";
 
 @Injectable({
@@ -38,6 +39,15 @@ export class HeroService {
       };
     }>({
       mutation: ADD_HERO,
+      variables: {
+        ...hero,
+      },
+    });
+  }
+
+  updateHeroMutate(hero: Hero) {
+    return this.apollo.mutate<any>({
+      mutation: UPDATE_HERO,
       variables: {
         ...hero,
       },
