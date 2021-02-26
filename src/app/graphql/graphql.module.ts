@@ -10,6 +10,7 @@ import { setContext } from "@apollo/client/link/context";
 import { HttpHeaders } from "@angular/common/http";
 import { environment } from "src/environments/environment";
 import { HeroService } from "../features/hero/containers/heroes/hero.service";
+import { cache } from "./cache";
 
 const uri = environment.graphqlEndpoint;
 
@@ -22,7 +23,6 @@ export function createApollo(httpLink: HttpLink): ApolloClientOptions<any> {
   }));
 
   const link = ApolloLink.from([basic, httpLink.create({ uri })]);
-  const cache = new InMemoryCache();
 
   return {
     link,

@@ -10,6 +10,7 @@ import {
   DELETE_A_HERO,
   UPDATE_HERO,
 } from "src/app/graphql/mutations/hero.mutations";
+import { cache } from "src/app/graphql/cache";
 
 @Injectable()
 export class HeroService {
@@ -18,6 +19,7 @@ export class HeroService {
   getHeroesQuery() {
     return this.apollo.watchQuery<{ heroes: Hero[] }>({
       query: GET_HEROES_QUERY,
+      fetchPolicy: "network-only",
     }).valueChanges;
   }
 
@@ -33,6 +35,17 @@ export class HeroService {
       variables: {
         id: id,
       },
+      optimisticResponse: {} as any,
+      update: (cache) => {
+        const appCache = cache.readQuery<{ heroes: Hero[] }>({
+          query: GET_HEROES_QUERY,
+        });
+        const newHeroes = appCache.heroes.filter((h) => h.id != id);
+        cache.writeQuery({
+          query: GET_HEROES_QUERY,
+          data: { heroes: newHeroes },
+        });
+      },
     });
   }
 
@@ -46,6 +59,16 @@ export class HeroService {
       variables: {
         ...hero,
       },
+      update: (cache, result) => {
+        const appCache = cache.readQuery<{ heroes: Hero[] }>({
+          query: GET_HEROES_QUERY,
+        });
+        const newHero = result.data.insert_heroes.returning[0];
+        cache.writeQuery({
+          query: GET_HEROES_QUERY,
+          data: { heroes: [...appCache.heroes, newHero] },
+        });
+      },
     });
   }
 
@@ -55,6 +78,29 @@ export class HeroService {
       variables: {
         ...hero,
       },
+      update: (cache) => {
+        const appCache = cache.readQuery<{ heroes: Hero[] }>({
+          query: GET_HEROES_QUERY,
+        });
+        const newHeroes = appCache.heroes.map((h) =>
+          h.id === hero.id ? hero : h
+        );
+        cache.writeQuery({
+          query: GET_HEROES_QUERY,
+          data: { heroes: newHeroes },
+        });
+      },
+    });
+  }
+
+  softDeleteHeroMutate(id: string) {
+    const appCache = cache.readQuery<{ heroes: Hero[] }>({
+      query: GET_HEROES_QUERY,
+    });
+    const newHeroes = appCache.heroes.filter((h) => h.id != id);
+    cache.writeQuery({
+      query: GET_HEROES_QUERY,
+      data: { heroes: newHeroes },
     });
   }
 }

@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Apollo } from "apollo-angular";
 import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
-import { catchError, finalize, map, tap } from "rxjs/operators";
+import { catchError, finalize, map } from "rxjs/operators";
 import { of } from "rxjs";
 import { HeroService } from "./hero.service";
 import { Hero } from "./hero.model";
@@ -41,7 +41,6 @@ export class HeroesComponent implements OnInit {
       .deleteHeroMutate(id)
       .pipe(
         untilDestroyed(this),
-        map(() => (this.heroes = this.heroes.filter((h) => h.id != id))),
         catchError((error) => of([])),
         finalize(() => (this.isLoading = false))
       )
@@ -54,14 +53,6 @@ export class HeroesComponent implements OnInit {
       .addHeroMutate(this.itemForm.value)
       .pipe(
         untilDestroyed(this),
-        map((result: any) => {
-          this.heroes = [
-            ...this.heroes,
-            result.data.insert_heroes.returning[0],
-          ];
-          this.isLoading = result.loading;
-          this.error = result.error;
-        }),
         catchError((error) => of([])),
         finalize(() => (this.isLoading = false))
       )
@@ -75,19 +66,15 @@ export class HeroesComponent implements OnInit {
       .updateHeroMutate(editedHero)
       .pipe(
         untilDestroyed(this),
-        map(
-          () =>
-            (this.heroes = this.heroes.map((h) =>
-              h.id === editedHero.id ? editedHero : h
-            ))
-        ),
         catchError((error) => of([])),
         finalize(() => (this.isLoading = false))
       )
       .subscribe();
   }
 
-  handleSoftDeleteHero(id: string) {}
+  handleSoftDeleteHero(id: string) {
+    this.heroService.softDeleteHeroMutate(id);
+  }
 
   handleNavigateHeroDetail(id: string) {
     this.router.navigateByUrl("/heroes/hero-detail/" + id);

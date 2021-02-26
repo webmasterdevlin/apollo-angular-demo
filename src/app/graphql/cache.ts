@@ -1,6 +1,6 @@
 // TODO: NOT COMPLETED
 
-import { InMemoryCache, makeVar } from "@apollo/client";
+/*import { InMemoryCache, makeVar } from "@apollo/client";
 
 import { Hero } from "../features/hero/containers/heroes/hero.model";
 
@@ -22,4 +22,8 @@ export const cache = new InMemoryCache({
       },
     },
   },
-});
+});*/
+
+import { InMemoryCache } from "@apollo/client/core";
+
+export const cache = new InMemoryCache();
