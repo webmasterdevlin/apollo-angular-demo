@@ -1,8 +1,7 @@
 import { Component, OnInit } from "@angular/core";
-import { Apollo } from "apollo-angular";
-import { HeroService } from "../../../features/hero/containers/heroes/hero.service";
+import { Hero } from "src/app/features/hero/containers/heroes/hero.model";
+import { HeroService } from "src/app/features/hero/containers/heroes/hero.service";
 import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
-import { Hero } from "../../../features/hero/containers/heroes/hero.model";
 
 @UntilDestroy()
 @Component({
@@ -14,7 +13,7 @@ export class CharacterListComponent implements OnInit {
   heroes: Hero[];
   villains: any;
 
-  constructor(private apollo: Apollo, private heroService: HeroService) {}
+  constructor(private heroService: HeroService) {}
 
   ngOnInit(): void {
     this.fetchHeroes();
