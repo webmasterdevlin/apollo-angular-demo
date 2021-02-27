@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
-import { catchError, finalize, map } from "rxjs/operators";
+import { catchError, map } from "rxjs/operators";
 import { of } from "rxjs";
 import { HeroService } from "./hero.service";
 import { Hero } from "./hero.model";
@@ -34,38 +34,32 @@ export class HeroesComponent implements OnInit {
   }
 
   handleDeleteHero(id: string) {
-    this.isLoading = true;
     this.heroService
       .deleteHeroMutate(id)
       .pipe(
         untilDestroyed(this),
-        catchError((error) => of([])),
-        finalize(() => (this.isLoading = false))
+        catchError((error) => of([]))
       )
       .subscribe();
   }
 
   handleAddHero() {
-    this.isLoading = true;
     this.heroService
       .addHeroMutate(this.itemForm.value)
       .pipe(
         untilDestroyed(this),
-        catchError((error) => of([])),
-        finalize(() => (this.isLoading = false))
+        catchError((error) => of([]))
       )
       .subscribe();
   }
 
   handleUpdateHero() {
     const editedHero = this.editedForm.value;
-    this.isLoading = true;
     this.heroService
       .updateHeroMutate(editedHero)
       .pipe(
         untilDestroyed(this),
-        catchError((error) => of([])),
-        finalize(() => (this.isLoading = false))
+        catchError((error) => of([]))
       )
       .subscribe();
   }
