@@ -83,13 +83,8 @@ export class HeroesComponent implements OnInit {
       .getHeroesQuery()
       .pipe(
         untilDestroyed(this),
-        map((result) => {
-          this.heroes = result?.data?.heroes;
-          this.isLoading = result.loading;
-          this.error = result.error;
-        }),
-        catchError((error) => of([])),
-        finalize(() => (this.isLoading = false))
+        map(({ data }) => (this.heroes = data.heroes)),
+        catchError((error) => of([]))
       )
       .subscribe();
   }
