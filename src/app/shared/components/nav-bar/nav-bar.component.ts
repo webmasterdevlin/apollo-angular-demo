@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { HeroService } from "../../../features/hero/containers/heroes/hero.service";
+import { HeroService } from "src/app/features/hero/containers/heroes/hero.service";
 import { catchError, map } from "rxjs/operators";
 import { of } from "rxjs";
 import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
