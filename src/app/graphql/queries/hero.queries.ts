@@ -13,7 +13,7 @@ export const GET_HEROES_QUERY = gql`
 `;
 
 export const GET_HEROES_QUERY_CLIENT = gql`
-  query get_heroes {
+  query get_heroes_client {
     heroes @client {
       id
       firstName
