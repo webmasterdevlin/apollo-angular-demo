@@ -1,16 +1,12 @@
 import { NgModule } from "@angular/core";
-import { APOLLO_OPTIONS } from "apollo-angular";
-import {
-  ApolloClientOptions,
-  ApolloLink,
-  InMemoryCache,
-} from "@apollo/client/core";
+import { environment } from "src/environments/environment";
 import { HttpLink } from "apollo-angular/http";
+import { ApolloClientOptions, ApolloLink } from "@apollo/client/core";
 import { setContext } from "@apollo/client/link/context";
 import { HttpHeaders } from "@angular/common/http";
-import { environment } from "src/environments/environment";
-import { HeroService } from "../features/hero/containers/heroes/hero.service";
 import { cache } from "./cache";
+import { APOLLO_OPTIONS } from "apollo-angular";
+import { HeroService } from "../features/hero/containers/heroes/hero.service";
 
 const uri = environment.graphqlEndpoint;
 

@@ -1,10 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Apollo } from "apollo-angular";
 import { Hero } from "./hero.model";
-import {
-  GET_HEROES_QUERY,
-  GET_HEROES_QUERY_CLIENT,
-} from "src/app/graphql/queries/hero.queries";
+import { GET_HEROES_QUERY } from "src/app/graphql/queries/hero.queries";
 import {
   ADD_HERO,
   DELETE_A_HERO,
@@ -20,12 +17,6 @@ export class HeroService {
     return this.apollo.watchQuery<{ heroes: Hero[] }>({
       query: GET_HEROES_QUERY,
       fetchPolicy: "network-only",
-    }).valueChanges;
-  }
-
-  getHeroesQueryClient() {
-    return this.apollo.watchQuery<{ heroes: Hero[] }>({
-      query: GET_HEROES_QUERY_CLIENT,
     }).valueChanges;
   }
 
