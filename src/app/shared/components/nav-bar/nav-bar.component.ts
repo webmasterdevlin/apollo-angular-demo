@@ -1,9 +1,8 @@
 import { Component, OnInit } from "@angular/core";
-import { Apollo } from "apollo-angular";
 import { HeroService } from "../../../features/hero/containers/heroes/hero.service";
-import { catchError, finalize, map } from "rxjs/operators";
-import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
+import { catchError, map } from "rxjs/operators";
 import { of } from "rxjs";
+import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
 
 @UntilDestroy()
 @Component({
@@ -15,13 +14,23 @@ export class NavBarComponent implements OnInit {
   totalHeroes = 0;
   totalVillains = 0;
 
-  constructor(private apollo: Apollo, private heroService: HeroService) {}
+  constructor(private heroService: HeroService) {}
 
   ngOnInit(): void {
     this.getTotalHeroes();
   }
 
-  getTotalHeroes() {
+  handleLoadCharacters() {
+    this.heroService
+      .getHeroesQuery()
+      .pipe(
+        untilDestroyed(this),
+        catchError((error) => of([]))
+      )
+      .subscribe();
+  }
+
+  private getTotalHeroes() {
     this.heroService
       .getHeroesQuery()
       .pipe(
