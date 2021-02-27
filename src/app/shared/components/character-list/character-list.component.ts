@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { Hero } from "src/app/features/hero/containers/heroes/hero.model";
+import { Villain } from "src/app/features/villain/containers/villains/villain.model";
 import { HeroService } from "src/app/features/hero/containers/heroes/hero.service";
+import { VillainService } from "src/app/features/villain/containers/villains/villain.service";
 import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
 
 @UntilDestroy()
@@ -11,12 +13,16 @@ import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
 })
 export class CharacterListComponent implements OnInit {
   heroes: Hero[];
-  villains: any;
+  villains: Villain[];
 
-  constructor(private heroService: HeroService) {}
+  constructor(
+    private heroService: HeroService,
+    private villainService: VillainService
+  ) {}
 
   ngOnInit(): void {
     this.fetchHeroes();
+    this.fetchVillains();
   }
 
   fetchHeroes() {
@@ -25,6 +31,15 @@ export class CharacterListComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe((result) => {
         this.heroes = result?.data?.heroes;
+      });
+  }
+
+  fetchVillains() {
+    this.villainService
+      .getVillainsQuery()
+      .pipe(untilDestroyed(this))
+      .subscribe((result) => {
+        this.villains = result?.data?.villains;
       });
   }
 }
