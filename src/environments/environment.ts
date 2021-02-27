@@ -2,10 +2,11 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+/* your own hasura key and this should be kept in a server's environment variables */
 export const environment = {
   production: false,
   graphqlEndpoint: "https://heroes.hasura.app/v1/graphql",
-  hasuraKey: "OwhUNq10xBZhBCYVF6lxiCkkaNz7hbMvATMs9zN7dsdv8jvVKpFMbPiALGao6MG3", // This should be kept in a server, not here
+  hasuraKey: "OwhUNq10xBZhBCYVF6lxiCkkaNz7hbMvATMs9zN7dsdv8jvVKpFMbPiALGao6MG3",
 };
 
 /*
