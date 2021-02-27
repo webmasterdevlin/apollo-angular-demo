@@ -1,7 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
-import { Apollo } from "apollo-angular";
 import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
 import { catchError, finalize, map } from "rxjs/operators";
 import { of } from "rxjs";
@@ -26,7 +25,6 @@ export class HeroesComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private apollo: Apollo,
     private heroService: HeroService
   ) {}
 
