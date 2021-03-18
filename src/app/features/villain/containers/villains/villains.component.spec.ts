@@ -3,15 +3,16 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 import { of } from "rxjs";
 
-import { HeroesComponent } from "./heroes.component";
 import { SharedModule } from "src/app//shared/shared.module";
-import { HeroService } from "./hero.service";
+
 import { VillainService } from "src/app/features/villain/containers/villains/villain.service";
 import { HEROES } from "src/app/mocks/mock-heroes";
 import { VILLAINS } from "src/app/mocks/mock-villains";
 import { fakeAsync } from "@angular/core/testing";
+import { HeroService } from "src/app/features/hero/containers/heroes/hero.service";
+import { VillainsComponent } from "./villains.component";
 
-let spector: Spectator<HeroesComponent>;
+let spector: Spectator<VillainsComponent>;
 const heroSvcSpy = jasmine.createSpyObj<HeroService>([
   "getHeroesQuery",
   "deleteHeroMutate",
@@ -42,7 +43,7 @@ villainSvcSpy.getVillainsQuery.and.returnValue(
 );
 
 const createComponent = createComponentFactory({
-  component: HeroesComponent,
+  component: VillainsComponent,
   imports: [ReactiveFormsModule, SharedModule, RouterModule.forRoot([])],
   providers: [
     { provide: HeroService, useValue: heroSvcSpy },
@@ -50,20 +51,20 @@ const createComponent = createComponentFactory({
   ],
 });
 
-describe("HeroesComponent", () => {
+describe("VillainsComponent", () => {
   it("should display the title", function () {
     spector = createComponent();
     const title = spector.query("h1");
-    expect(title).toHaveText("Super Heroes Page");
+    expect(title).toHaveText("Super Villains Page");
   });
 
-  it("should render two heroes", function () {
+  it("should render two villains", function () {
     spector = createComponent();
     const heroes = spector.queryAll("mat-card-title");
     expect(heroes).toHaveLength(2);
   });
 
-  it("should delete a hero after clicking soft delete button", fakeAsync(() => {
+  it("should delete a villain after clicking soft delete button", fakeAsync(() => {
     spector = createComponent();
     const buttons = spector
       .queryAll("button")
