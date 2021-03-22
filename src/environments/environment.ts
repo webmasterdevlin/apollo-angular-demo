@@ -6,7 +6,7 @@
 export const environment = {
   production: false,
   graphqlEndpoint: "https://heroes.hasura.app/v1/graphql",
-  hasuraKey: "OwhUNq10xBZhBCYVF6lxiCkkaNz7hbMvATMs9zN7dsdv8jvVKpFMbPiALGao6MG3",
+  hasuraKey: "XHV3J9uopfA6mD7MKA9hyDI2vxvWcc0BytF2u64GwnxwKwd3GsaZCrfc0sde03oR",
 };
 
 /*
