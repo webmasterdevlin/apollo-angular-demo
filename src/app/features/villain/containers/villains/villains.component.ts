@@ -85,16 +85,16 @@ export class VillainsComponent implements OnInit {
 
   private formBuilderInit(): void {
     this.itemForm = this.fb.group({
-      firstName: ["", [Validators.required, Validators.minLength(4)]],
-      lastName: ["", [Validators.required, Validators.minLength(4)]],
+      firstName: ["", [Validators.required, Validators.minLength(2)]],
+      lastName: ["", [Validators.required, Validators.minLength(2)]],
       house: [""],
       knownAs: [""],
     });
 
     this.editedForm = this.fb.group({
       id: [""],
-      firstName: ["", [Validators.required, Validators.minLength(4)]],
-      lastName: ["", [Validators.required, Validators.minLength(4)]],
+      firstName: ["", [Validators.required, Validators.minLength(2)]],
+      lastName: ["", [Validators.required, Validators.minLength(2)]],
       house: [""],
       knownAs: [""],
     });
