@@ -2,8 +2,8 @@
 
 declare namespace Cypress {
   interface Chainable {
-    queryCommand(): Chainable<any>;
-    SetupInputFieldsCommand(): Chainable<any>;
-    NavigateByTestIdCommand(testId: string): Chainable<any>;
+    queryCommand(): void;
+    SetupInputFieldsCommand(): void;
+    NavigateByTestIdCommand(testId: string): void;
   }
 }
