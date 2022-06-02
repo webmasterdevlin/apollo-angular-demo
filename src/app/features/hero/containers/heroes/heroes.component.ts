@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
 import { catchError, map } from "rxjs/operators";
@@ -15,15 +15,15 @@ import { Hero } from "./hero.model";
 })
 export class HeroesComponent implements OnInit {
   heroes: Hero[];
-  itemForm: FormGroup;
-  editedForm: FormGroup;
+  itemForm: UntypedFormGroup;
+  editedForm: UntypedFormGroup;
   isLoading = false;
   editingTracker = "0";
   rates: any[];
   error: any;
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private router: Router,
     private heroService: HeroService
   ) {}
